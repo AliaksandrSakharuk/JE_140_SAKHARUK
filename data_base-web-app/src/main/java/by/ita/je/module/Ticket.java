@@ -20,6 +20,10 @@ public class Ticket {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
+
     @ManyToOne
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;

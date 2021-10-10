@@ -27,6 +27,6 @@ public class Passenger {
     private Set<Ticket> tickets;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "adress_id")
+    @JoinColumn(name = "address_id")
     private Address address;
 }

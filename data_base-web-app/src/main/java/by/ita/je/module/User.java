@@ -11,11 +11,16 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
+    private String email;
+    private String firstName;
+    private String secondName;
+    private long phoneNumber;
     private String password;
     private boolean enabled;
 

@@ -21,7 +21,9 @@ public class Flight {
     private String numberFlight;
     private String departureCity;
     private ZonedDateTime departureDateTime;
+    private int durationFlight;
     private String arriveCity;
+    private ZonedDateTime arriveDateTime;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "flight")
     private Set<Seat> seats;

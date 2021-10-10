@@ -19,7 +19,7 @@ public class Address {
     private String country;
     private String city;
     private String street;
-    private byte numberHouse;
+    private String numberHouse;
     private int numberFlat;
     private int numberCabinet;
 }
