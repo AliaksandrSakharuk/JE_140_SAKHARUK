@@ -1,14 +1,15 @@
-package by.ita.je.module;
+package by.ita.je.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.ZonedDateTime;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,13 +26,14 @@ public class Flight {
     private String arriveCity;
     private ZonedDateTime arriveDateTime;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "flight")
-    private Set<Seat> seats;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "flight_id")
+    private List<Seat> seats;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "flight")
-    private Set<Ticket> tickets;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "flight")
+//    private List<Ticket> tickets;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "plane_id")
     private Plane plane;
 }

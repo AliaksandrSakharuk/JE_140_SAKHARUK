@@ -1,9 +1,9 @@
 package by.ita.je.dao;
 
-import by.ita.je.model.AirCompany;
+import by.ita.je.model.Plane;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AirCompanyDao extends CrudRepository<AirCompany, Long> {
+public interface PlaneDao extends CrudRepository<Plane, Long> {
 }

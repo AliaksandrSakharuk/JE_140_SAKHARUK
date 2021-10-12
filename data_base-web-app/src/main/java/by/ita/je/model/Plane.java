@@ -1,4 +1,4 @@
-package by.ita.je.module;
+package by.ita.je.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,12 +23,14 @@ public class Plane {
     private int seatsInLine;
     private int quantityLines;
 
+
     @ManyToOne
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private AirCompany company;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "plane")
-    private Set<Flight> flights;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy ="plane")
+//    @JsonIgnore
+//    private List<Flight> flights;
 
 }

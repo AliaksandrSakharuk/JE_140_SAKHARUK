@@ -1,7 +1,7 @@
 package by.ita.je.controller;
 
 import by.ita.je.dto.AirCompanyDto;
-import by.ita.je.module.AirCompany;
+import by.ita.je.model.AirCompany;
 import by.ita.je.service.api.AirCompanyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-public class BusinessController {
+public class AirCompanyController {
 
     private final ObjectMapper objectMapper;
     private final AirCompanyService companyService;
@@ -50,5 +50,8 @@ public class BusinessController {
     public void delleteById(@PathVariable("id") String id){
         companyService.deleteById(Long.valueOf(id));
     }
+
+
+
 
 }

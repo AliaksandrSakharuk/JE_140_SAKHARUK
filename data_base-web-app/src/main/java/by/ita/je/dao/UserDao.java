@@ -1,9 +1,10 @@
 package by.ita.je.dao;
 
-import by.ita.je.model.AirCompany;
+import by.ita.je.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AirCompanyDao extends CrudRepository<AirCompany, Long> {
+public interface UserDao extends CrudRepository<User, Long> {
+    User findByLogin (String login);
 }

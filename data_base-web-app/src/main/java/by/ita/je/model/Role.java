@@ -1,4 +1,4 @@
-package by.ita.je.module;
+package by.ita.je.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,14 +9,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Entity
-public class Seat {
+@Table(name = "roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numberSeat;
-    private boolean booked;
-
-    @ManyToOne
-    @JoinColumn(name = "flight_id")
-    private Flight flight;
+    @Column(name = "role_name")
+    private String roleName;
 }

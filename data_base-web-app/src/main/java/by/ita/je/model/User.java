@@ -1,10 +1,11 @@
-package by.ita.je.module;
+package by.ita.je.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -32,5 +33,5 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private Set<Passenger> passengers;
+    private List<Passenger> passengers;
 }

@@ -1,4 +1,4 @@
-package by.ita.je.module;
+package by.ita.je.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Set;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +23,9 @@ public class Passenger {
     private long phoneNumber;
     private String passportNumber;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "passenger")
-    private Set<Ticket> tickets;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "passenger_id")
+    private List<Ticket> tickets;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")

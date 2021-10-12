@@ -1,6 +1,6 @@
 package by.ita.je.dto;
 
-import by.ita.je.module.AirCompany;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

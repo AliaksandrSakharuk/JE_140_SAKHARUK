@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SeatDto {
     private Long id;
-    private int numberSeat;
+    private String numberSeat;
     private boolean booked;
 }

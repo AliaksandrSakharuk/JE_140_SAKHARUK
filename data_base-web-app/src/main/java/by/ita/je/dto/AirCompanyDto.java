@@ -1,14 +1,11 @@
 package by.ita.je.dto;
 
-import by.ita.je.module.Address;
-import by.ita.je.module.Plane;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Builder
 @Data

@@ -1,11 +1,10 @@
 package by.ita.je.dto;
 
-import by.ita.je.module.Passenger;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,5 +17,5 @@ public class UserDto {
     private String firstName;
     private String secondName;
     private long phoneNumber;
-    private Set<PassengerDto> passengers;
+    private List<PassengerDto> passengers;
 }

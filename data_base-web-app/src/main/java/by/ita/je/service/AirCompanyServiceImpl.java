@@ -2,11 +2,12 @@ package by.ita.je.service;
 
 import by.ita.je.dao.AirCompanyDao;
 import by.ita.je.exception.NotFoundData;
-import by.ita.je.module.AirCompany;
-import by.ita.je.module.Plane;
+import by.ita.je.model.AirCompany;
+import by.ita.je.model.Plane;
 import by.ita.je.service.api.AirCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -25,8 +26,12 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     }
 
     @Override
-    public AirCompany update(Long id, AirCompany company) {
-        return companyServiceDao.save(company);
+    public AirCompany update(Long id, AirCompany companyNew) {
+        final AirCompany airCompany = companyServiceDao.findById(id)
+                .orElseThrow(() -> new NotFoundData( "AirCompany"));
+        if(companyNew.getNameCompany()!="") airCompany.setNameCompany(companyNew.getNameCompany());
+        if(companyNew.getPhoneNumber()!=0) airCompany.setPhoneNumber(companyNew.getPhoneNumber());
+        return companyServiceDao.save(airCompany);
     }
 
     @Override
@@ -56,9 +61,7 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     private void createIfNotRelationshipAirCompanyToPlanes(AirCompany company){
         if (Objects.isNull(company.getPlanes()) || company.getPlanes().isEmpty()){
             Plane boeing=cteateBoeing737_500();
-            boeing.setCompany(company);
             Plane embrare=createEmbraer195();
-            embrare.setCompany(company);
             company.setPlanes(List.of(boeing, embrare));
         }
     }
