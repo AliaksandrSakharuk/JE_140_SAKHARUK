@@ -1,7 +1,6 @@
 package by.ita.je.service;
 
 import by.ita.je.dao.*;
-import by.ita.je.dto.DateForFlightDto;
 import by.ita.je.model.Flight;
 import by.ita.je.model.Plane;
 import by.ita.je.model.Seat;
@@ -17,22 +16,28 @@ import java.util.Set;
 @Service
 public class SearcherServiceImpl implements SearcherService {
 
-    private final SearcherFlightBySeatDao searcherFlightBySeatDao;
+    private final SearcherFlightBySeat searcherFlightBySeat;
     private SearcherFreePlaneDao freePlanDao;
     private final SearcherFreeSeatOnFlightDao seatOnFlightDao;
     private final SearcherFlightByAirCompanyDao searcherFlightByAirCompanyDao;
     private final SearcherFlightByDurationDao searcherFlightByDurationDao;
     private final SearcherFlightWithPlaneChangeDao searcherFlightWithPlaneChangeDao;
+    private final SearcherSeatForCancelBookedTicket searcherSeatForCancelBookedTicket;
 
     @Override
     public Flight findFlightBySeat(long id) {
-        return searcherFlightBySeatDao.findFlightBySeat(id);
+        return searcherFlightBySeat.findFlightBySeat(id);
     }
 
     @Override
-    public Plane findFreePlane(DateForFlightDto dateForFlightDto) {
-        ZonedDateTime fromDateTime=dateForFlightDto.getDateTimeNewFlight().minusHours(4);
-        ZonedDateTime toDateTime=dateForFlightDto.getDateTimeNewFlight().plusHours(4);
+    public Seat findSeatForCancelBookedTicket(String numberFlight, String numberSeat) {
+        return searcherSeatForCancelBookedTicket.findSeatForCancelBookedTicket(numberFlight, numberSeat);
+    }
+
+    @Override
+    public Plane findFreePlane(ZonedDateTime dateForFlightDto) {
+        ZonedDateTime fromDateTime=dateForFlightDto.minusHours(8);
+        ZonedDateTime toDateTime=dateForFlightDto.plusHours(8);
         return freePlanDao.findFreePlane(fromDateTime, toDateTime);
     }
 

@@ -21,12 +21,7 @@ public class FlightController {
     private final ObjectMapper objectMapper;
     private final FlightService flightService;
     private final SearcherService searcherService;
-    @PostMapping("/flight")
-    public FlightDto create(@RequestBody FlightDto flightDto){
-        final Flight flightNew = objectMapper.convertValue(flightDto, Flight.class);
-        final Flight flight=flightService.save(flightNew);
-        return objectMapper.convertValue(flight, FlightDto.class);
-    }
+
 
     @GetMapping("/flight/{id}")
     public FlightDto findById(@PathVariable("id") String id){

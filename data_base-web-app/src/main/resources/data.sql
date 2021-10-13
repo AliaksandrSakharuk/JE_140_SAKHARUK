@@ -114,11 +114,9 @@
         CREATE TABLE ticket(
             id bigint NOT NULL AUTO_INCREMENT,
             booked_date_time timestamp DEFAULT CURRENT_TIMESTAMP,
-            booked bool default true,
+            number_seat varchar(25),
             passenger_id bigint,
             flight_id bigint,
-            seat_id bigint,
-            FOREIGN KEY (seat_id) REFERENCES seat(id),
             FOREIGN KEY (flight_id) REFERENCES flight(id),
             FOREIGN KEY (passenger_id) REFERENCES passenger(id),
             primary key(id)
@@ -798,18 +796,18 @@
         INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
         values('Igor', 'Olechovich', 'AB 5349591', 296446666, 8, 4);
 
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(1, 1, 1);
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(2, 2, 86);
-        INSERT INTO ticket( passenger_id, flight_id, seat_id)
-        values(3, 2, 87);
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(4, 4, 170);
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(5, 4, 173);
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(6, 2, 88);
-        INSERT INTO ticket(passenger_id, flight_id, seat_id)
-        values(6, 3, 128);
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(1, 1, '1A');
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(2, 2, '2A');
+        INSERT INTO ticket( passenger_id, flight_id, number_seat)
+        values(3, 2, '2B');
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(4, 4, '10C');
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(5, 4, '10D');
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(6, 2, '2D');
+        INSERT INTO ticket(passenger_id, flight_id, number_seat)
+        values(6, 3, '8A');
 

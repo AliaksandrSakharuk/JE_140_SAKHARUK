@@ -1,10 +1,12 @@
 package by.ita.je.service;
 
 import by.ita.je.dao.AirCompanyDao;
+import by.ita.je.exception.NotCorrectData;
 import by.ita.je.exception.NotFoundData;
 import by.ita.je.model.AirCompany;
 import by.ita.je.model.Plane;
 import by.ita.je.service.api.AirCompanyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-
+@RequiredArgsConstructor
 @Service
 public class AirCompanyServiceImpl implements AirCompanyService {
 
@@ -20,14 +22,14 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     private AirCompanyDao companyServiceDao;
 
     @Override
-    public AirCompany save(AirCompany company) {
-        createIfNotRelationshipAirCompanyToPlanes(company);
+    public AirCompany save(AirCompany company) throws NotCorrectData {
+    if(company.getNameCompany()=="") throw new NotCorrectData("AirCompany");
         return companyServiceDao.save(company);
     }
 
     @Override
-    public AirCompany update(Long id, AirCompany companyNew) {
-        final AirCompany airCompany = companyServiceDao.findById(id)
+    public AirCompany update(Long id, AirCompany companyNew) throws NotFoundData {
+        AirCompany airCompany = companyServiceDao.findById(id)
                 .orElseThrow(() -> new NotFoundData( "AirCompany"));
         if(companyNew.getNameCompany()!="") airCompany.setNameCompany(companyNew.getNameCompany());
         if(companyNew.getPhoneNumber()!=0) airCompany.setPhoneNumber(companyNew.getPhoneNumber());
@@ -35,7 +37,7 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     }
 
     @Override
-    public AirCompany readById(Long id) {
+    public AirCompany readById(Long id) throws NotFoundData{
         final AirCompany company=companyServiceDao.findById(id)
                 .orElseThrow(() -> new NotFoundData("AirCompany"));
         return company;
@@ -50,43 +52,11 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws NotFoundData{
         try {
             companyServiceDao.deleteById(id);
         }catch (Exception e){
             throw new NotFoundData("AirCompany");
         }
     }
-
-    private void createIfNotRelationshipAirCompanyToPlanes(AirCompany company){
-        if (Objects.isNull(company.getPlanes()) || company.getPlanes().isEmpty()){
-            Plane boeing=cteateBoeing737_500();
-            Plane embrare=createEmbraer195();
-            company.setPlanes(List.of(boeing, embrare));
-        }
-    }
-
-
-    private Plane cteateBoeing737_500(){
-       return Plane.builder()
-                .namePlane("Boeing 737-500")
-                .namePilot("James Bond")
-                .quantitySeats(144)
-                .seatsInLine(6)
-                .quantityLines(24)
-                .invertorNumber(123456432L)
-                .build();
-    }
-
-    private Plane createEmbraer195(){
-        return Plane.builder()
-                .namePlane("Embraer 195")
-                .namePilot("SCALA")
-                .quantitySeats(114)
-                .seatsInLine(6)
-                .quantityLines(19)
-                .invertorNumber(7777777L)
-                .build();
-    }
-
 }

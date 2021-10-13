@@ -13,4 +13,7 @@ public class PlaneDto {
     private Long invertorNumber;
     private String namePlane;
     private String namePilot;
+    private  int quantitySeats;
+    private int seatsInLine;
+    private int quantityLines;
 }

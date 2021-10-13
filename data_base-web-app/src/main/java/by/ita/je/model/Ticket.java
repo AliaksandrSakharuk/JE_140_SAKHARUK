@@ -17,7 +17,7 @@ public class Ticket {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime bookedDateTime;
-    private boolean booked;
+    private String numberSeat;
 
 //    @ManyToOne
 //    @JoinColumn(name = "passenger_id")
@@ -27,8 +27,4 @@ public class Ticket {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "flight_id")
     private Flight flight;
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
 }

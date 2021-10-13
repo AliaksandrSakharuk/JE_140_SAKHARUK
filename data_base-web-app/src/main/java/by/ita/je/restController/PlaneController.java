@@ -1,6 +1,5 @@
 package by.ita.je.restController;
 
-import by.ita.je.dto.DateForFlightDto;
 import by.ita.je.dto.PlaneDto;
 import by.ita.je.model.Plane;
 import by.ita.je.service.api.PlaneService;
@@ -17,11 +16,11 @@ public class PlaneController {
     private final SearcherService searcherService;
     private  final PlaneService planeService;
 
-    @PostMapping("/plane/free")
-    public PlaneDto findFreePlane(@RequestBody DateForFlightDto fieldDto){
-        final Plane freePlane=searcherService.findFreePlane(fieldDto);
-        return objectMapper.convertValue(freePlane, PlaneDto.class);
-    }
+//    @PostMapping("/plane/free")
+//    public PlaneDto findFreePlane(@RequestBody DateForFlightDto fieldDto){
+//        final Plane freePlane=searcherService.findFreePlane(fieldDto);
+//        return objectMapper.convertValue(freePlane, PlaneDto.class);
+//    }
 
     @GetMapping("/plane/{id}")
     public PlaneDto findById(@PathVariable("id") String id){

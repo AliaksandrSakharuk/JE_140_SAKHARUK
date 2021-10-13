@@ -17,15 +17,11 @@ public class TicketController {
     private final ObjectMapper objectMapper;
     private final TicketService ticketService;
 
-    @GetMapping("/ticket/{id}")
-    public TicketDto createTicketByIdSeat(@PathVariable("id") String id){
-        final Ticket ticket=ticketService.bookTicket(Long.valueOf(id));
-        return objectMapper.convertValue(ticket, TicketDto.class);
-    }
 
-    @DeleteMapping("/ticket/{id}")
-    public void cancelTicket(@PathVariable("id") String id){
-        ticketService.cancelTicket(Long.valueOf(id));
-
-    }
+//
+//    @DeleteMapping("/ticket/{id}")
+//    public void cancelTicket(@PathVariable("id") String id){
+//        ticketService.cancelTicket(Long.valueOf(id));
+//
+//    }
 }

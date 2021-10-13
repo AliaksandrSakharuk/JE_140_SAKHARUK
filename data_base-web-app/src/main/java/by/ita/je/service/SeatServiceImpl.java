@@ -1,6 +1,7 @@
 package by.ita.je.service;
 
 import by.ita.je.dao.SeatDao;
+import by.ita.je.exception.NotCorrectData;
 import by.ita.je.exception.NotFoundData;
 import by.ita.je.model.Seat;
 import by.ita.je.service.api.SeatSericve;
@@ -11,22 +12,38 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class SeatServiceImpl implements SeatSericve {
+
     @Autowired
     private final SeatDao seatDao;
 
     @Override
-    public void cancelBooked(Long id) throws NotFoundData {
-        Seat seat=seatDao.findById(id)
-                .orElseThrow(() -> new NotFoundData("Seat"));
-        seat.setBooked(false);
-        seatDao.save(seat);
+    public Seat save(Seat seat) throws NotCorrectData {
+        if(seat.getNumberSeat()=="") throw new NotCorrectData("Plane");
+        return seatDao.save(seat);
+    }
+
+    @Override
+    public Seat update(Long id, Seat seatNew) throws NotFoundData {
+        Seat seat = seatDao.findById(id)
+                .orElseThrow(() -> new NotFoundData( "Seat"));
+        if(seatNew.getNumberSeat()!="") seat.setNumberSeat(seatNew.getNumberSeat());
+        seat.setBooked(seatNew.isBooked());
+        return seatDao.save(seat);
     }
 
     @Override
     public Seat readById(Long id) throws NotFoundData {
         final Seat seat=seatDao.findById(id)
                 .orElseThrow(() -> new NotFoundData("Seat"));
-
         return seat;
+    }
+
+    @Override
+    public void deleteById(Long id) throws NotFoundData {
+        try {
+            seatDao.deleteById(id);
+        }catch (Exception e){
+            throw new NotFoundData("Seat");
+        }
     }
 }

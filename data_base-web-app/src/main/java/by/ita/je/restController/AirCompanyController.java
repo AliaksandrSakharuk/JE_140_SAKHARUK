@@ -16,13 +16,7 @@ public class AirCompanyController {
     private final ObjectMapper objectMapper;
     private final AirCompanyService companyService;
 
-    @PostMapping("/company")
-    public AirCompanyDto create(@RequestBody AirCompanyDto companyDto){
-        final AirCompany companyNew = objectMapper.convertValue(companyDto, AirCompany.class);
-        final AirCompany company=companyService.save(companyNew);
 
-        return objectMapper.convertValue(company, AirCompanyDto.class);
-    }
 
     @GetMapping("/company/{id}")
     public AirCompanyDto findById(@PathVariable("id") String id){
