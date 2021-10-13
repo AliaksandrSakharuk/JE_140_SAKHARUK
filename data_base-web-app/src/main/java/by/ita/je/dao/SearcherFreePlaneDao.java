@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.ZonedDateTime;
 
-public interface FindFreePlaneDao extends JpaRepository<Plane, Long> {
+public interface SearcherFreePlaneDao extends JpaRepository<Plane, Long> {
     @Query(value="SELECT DISTINCT plane.* FROM plane LEFT JOIN flight ON flight.plane_id = plane.id " +
             "WHERE flight.plane_id IS NULL OR (flight.departure_date_time NOT BETWEEN  :from_date_time AND :to_date_time) " +
             "LIMIT 0,1", nativeQuery = true)

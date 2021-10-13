@@ -15,6 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity
+
+@NamedQuery(name="FindFlightByAirCompany", query = "SELECT flight FROM Flight flight JOIN flight.plane " +
+        "JOIN flight.plane.company WHERE flight.plane.company.nameCompany=:name")
+@NamedQuery(name="FindFlightByDuration", query = "SELECT flight FROM Flight flight WHERE flight.durationFlight<:duration")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

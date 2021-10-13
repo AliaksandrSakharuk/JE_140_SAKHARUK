@@ -1,6 +1,5 @@
 package by.ita.je.service;
 
-import by.ita.je.dao.FindFlightBySeatDao;
 import by.ita.je.dao.SeatDao;
 import by.ita.je.exception.NotFoundData;
 import by.ita.je.model.Seat;

@@ -18,6 +18,7 @@ public class FlightDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime departureDateTime;
     private String arriveCity;
+    private int durationFlight;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime arriveDateTime;
     private PlaneDto plane;

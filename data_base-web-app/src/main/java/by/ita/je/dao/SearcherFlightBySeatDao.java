@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FindFlightBySeatDao extends JpaRepository<Flight, Long> {
+public interface SearcherFlightBySeatDao extends JpaRepository<Flight, Long> {
     @Query(value = "SELECT DISTINCT flight.* FROM flight RIGHT JOIN seat ON flight.id=seat.flight_id WHERE seat.id=:id"
             , nativeQuery = true)
     Flight findFlightBySeat(long id);

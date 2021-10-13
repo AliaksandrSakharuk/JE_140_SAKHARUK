@@ -1,8 +1,6 @@
-package by.ita.je.controller;
+package by.ita.je.restController;
 
-import by.ita.je.dto.PlaneDto;
 import by.ita.je.dto.TicketDto;
-import by.ita.je.model.Plane;
 import by.ita.je.model.Ticket;
 import by.ita.je.service.api.TicketService;
 import com.fasterxml.jackson.databind.ObjectMapper;

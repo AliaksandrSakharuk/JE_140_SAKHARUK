@@ -1,4 +1,4 @@
-package by.ita.je.controller;
+package by.ita.je.restController;
 
 import by.ita.je.dto.AirCompanyDto;
 import by.ita.je.model.AirCompany;

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface FindFreeSeatOnFlightDao extends JpaRepository<Seat, Long> {
+public interface SearcherFreeSeatOnFlightDao extends JpaRepository<Seat, Long> {
     @Query(value = "SELECT * FROM SEAT seat INNER JOIN FLIGHT ON seat.flight_id=:id WHERE " +
             "seat.booked=false"
             , nativeQuery = true)
