@@ -114,11 +114,14 @@
         CREATE TABLE ticket(
             id bigint NOT NULL AUTO_INCREMENT,
             booked_date_time timestamp DEFAULT CURRENT_TIMESTAMP,
-            number_seat varchar(25),
-            passenger_id bigint,
-            flight_id bigint,
-            FOREIGN KEY (flight_id) REFERENCES flight(id),
-            FOREIGN KEY (passenger_id) REFERENCES passenger(id),
+            first_name_passenger varchar(255),
+            second_name_passenger varchar(255),
+            phone_number_passenger int default 0,
+            passport_number_passenger varchar(255),
+            seat_id bigint,
+            client_id bigint,
+            FOREIGN KEY (client_id) REFERENCES client(id),
+            FOREIGN KEY (seat_id) REFERENCES seat(id),
             primary key(id)
         );
 
@@ -127,9 +130,9 @@
         INSERT INTO client (first_name, second_name, email, phone_number)
         VALUES ('petia', 'olejnik', 'olejnik@gmail.com', 292112121);
         INSERT INTO client (first_name, second_name, email, phone_number)
-        VALUES ('sasha', 'kazak', 'kazak@gmail.com', 297330135);
+        VALUES ('sasha', 'kazak', 'sakharukaliaksandr@gmail.com', 297330135);
         INSERT INTO client (first_name, second_name, email, phone_number)
-        VALUES ('roma', 'salapura', 'salapurar@gmail.com', 297229238);
+        VALUES ('roma', 'salapura', 'salapura@gmail.com', 297229238);
 
         INSERT INTO roles (role_name) VALUES ('READER');
         INSERT INTO roles (role_name) VALUES ('EDITOR');
@@ -142,7 +145,7 @@
         INSERT INTO users (login, password, client_id)
         VALUES ('sasha', '$2a$10$dOSLyd3hnCQTqEn1qOxxCudCzFWw9Mmrw7wqwYuPRHVGXvCwCp5NK', 3);
         INSERT INTO users (login, password, client_id)
-        VALUES ('roma', '$2a$10$n7iTfbubVVoJn/OmEpbC2el.tHTYjeAHHB8jrQecxbUHe5lalmvR.', 4);
+        VALUES ('roma', '$2a$10$a.CfLLy931ppzWZi0IDxKO5DbEPMYZAwTtQhm4Ezy9MVBIGUHiVDW', 4);
 
         INSERT INTO users_roles (user_id, role_id) VALUES (1, 1);
         INSERT INTO users_roles (user_id, role_id) VALUES (1, 2);
@@ -201,74 +204,41 @@
         INSERT INTO flight(number_flight, departure_city, departure_date_time, duration_flight, arrive_city, arrive_date_time, plane_id)
         values('FK567', 'MINSK', '2021-11-01 20:00:00', 80, 'MOSCOW', '2021-11-01 21:20:00', 6);
 
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '1A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '1B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '1C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '1D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '2A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '2B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '2C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '2D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '3A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '3B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '3C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '3D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '4A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '4B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '4C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '4D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '5A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '5B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '5C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '5D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '6A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '6B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '6C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '6D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '7A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '7B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '7C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '7D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '8A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '8B', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '8C', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '8D', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(true, '9A', 1);
-        INSERT INTO seat(booked, number_seat, flight_id)
-        values(false, '9B', 1);
+
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '1A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '1B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '1C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '1D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '2A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '2B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '2C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '2D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '3A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '3B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '3C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '3D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '4A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '4B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '4C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '4D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '5A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '5B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '5C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '5D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '6A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '6B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '6C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '6D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '7A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '7B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '7C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '7D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '8A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '8B', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '8C', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '8D', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(true, '9A', 1);
+        INSERT INTO seat(booked, number_seat, flight_id) values(false, '9B', 1);
         INSERT INTO seat(booked, number_seat, flight_id)
         values(true, '9C', 1);
         INSERT INTO seat(booked, number_seat, flight_id)
@@ -703,7 +673,7 @@
         INSERT INTO seat(booked, number_seat, flight_id)
         values(false, '2D', 6);
         INSERT INTO seat(booked, number_seat, flight_id)
-                                values(false, '3A', 6);
+        values(false, '3A', 6);
         INSERT INTO seat(booked, number_seat, flight_id)
         values(false, '3B', 6);
         INSERT INTO seat(booked, number_seat, flight_id)
@@ -783,31 +753,30 @@
         INSERT INTO seat(booked, number_seat, flight_id)
         values(false, '12D', 6);
 
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Vadim', 'Kazak', 'AB 3234455', 297903271, 3, 3);
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Maksim', 'Fedeev', 'AB 3457901', 296330195, 4, 3);
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Semen', 'Dron', 'AB 6540394', 292250081, 5, 3);
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Ruslan', 'Zavizenec', 'AB 3840101', 295643201, 6, 4);
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Zaur', 'Martirosian', 'AB 3110401', 291230673, 7, 4);
-        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
-        values('Igor', 'Olechovich', 'AB 5349591', 296446666, 8, 4);
+          INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Vadim', 'Kazak', 'AB 3234455', 297903271, 3, 3);
+                        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Maksim', 'Fedeev', 'AB 3457901', 296330195, 4, 3);
+                        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Semen', 'Dron', 'AB 6540394', 292250081, 5, 3);
+                        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Ruslan', 'Zavizenec', 'AB 3840101', 295643201, 6, 4);
+                        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Zaur', 'Martirosian', 'AB 3110401', 291230673, 7, 4);
+                        INSERT INTO PASSENGER(first_name, second_name, passport_number, phone_number, address_id, client_id)
+                        values('Igor', 'Olechovich', 'AB 5349591', 296446666, 8, 4);
 
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(1, 1, '1A');
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(2, 2, '2A');
-        INSERT INTO ticket( passenger_id, flight_id, number_seat)
-        values(3, 2, '2B');
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(4, 4, '10C');
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(5, 4, '10D');
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(6, 2, '2D');
-        INSERT INTO ticket(passenger_id, flight_id, number_seat)
-        values(6, 3, '8A');
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger,  seat_id, client_id)
+                        values('Vadim', 'Kazak', 'AB 3234455', 297903271, 1, 3);
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger, seat_id, client_id)
+                        values('Maksim', 'Fedeev', 'AB 3457901', 296330195, 58, 3);
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger, seat_id, client_id)
+                        values('Semen', 'Dron', 'AB 6540394', 292250081, 104, 3);
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger, seat_id, client_id)
+                        values('Ruslan', 'Zavizenec', 'AB 3840101', 295643201, 156, 4);
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger, seat_id, client_id)
+                        values('Zaur', 'Martirosian', 'AB 3110401', 291230673, 179 ,4);
+                        INSERT INTO ticket(first_name_passenger, second_name_passenger, passport_number_passenger, phone_number_passenger, seat_id, client_id)
+                        values('Igor', 'Olechovich', 'AB 5349591', 296446666, 203, 4);
+
 

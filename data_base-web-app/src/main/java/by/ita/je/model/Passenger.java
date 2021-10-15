@@ -1,5 +1,6 @@
 package by.ita.je.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,6 @@ public class Passenger {
     private String secondName;
     private long phoneNumber;
     private String passportNumber;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "passenger_id")
-    private List<Ticket> tickets;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")

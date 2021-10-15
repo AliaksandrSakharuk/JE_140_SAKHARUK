@@ -1,6 +1,7 @@
 package by.ita.je.service;
 
 import by.ita.je.dao.*;
+import by.ita.je.dto.FieldSearcherDto;
 import by.ita.je.model.Flight;
 import by.ita.je.model.Plane;
 import by.ita.je.model.Seat;
@@ -15,24 +16,24 @@ import java.util.Set;
 @AllArgsConstructor
 @Service
 public class SearcherServiceImpl implements SearcherService {
-
-    private final SearcherFlightBySeat searcherFlightBySeat;
+//
+//    private final SearcherFlightBySeat searcherFlightBySeat;
     private SearcherFreePlaneDao freePlanDao;
     private final SearcherFreeSeatOnFlightDao seatOnFlightDao;
     private final SearcherFlightByAirCompanyDao searcherFlightByAirCompanyDao;
     private final SearcherFlightByDurationDao searcherFlightByDurationDao;
     private final SearcherFlightWithPlaneChangeDao searcherFlightWithPlaneChangeDao;
-    private final SearcherSeatForCancelBookedTicket searcherSeatForCancelBookedTicket;
+//    private final SearcherSeatForCancelBookedTicket searcherSeatForCancelBookedTicket;
+//
+//    @Override
+//    public Flight findFlightBySeat(long id) {
+//        return searcherFlightBySeat.findFlightBySeat(id);
+//    }
 
-    @Override
-    public Flight findFlightBySeat(long id) {
-        return searcherFlightBySeat.findFlightBySeat(id);
-    }
-
-    @Override
-    public Seat findSeatForCancelBookedTicket(String numberFlight, String numberSeat) {
-        return searcherSeatForCancelBookedTicket.findSeatForCancelBookedTicket(numberFlight, numberSeat);
-    }
+//    @Override
+//    public Seat findSeatForCancelBookedTicket(String numberFlight, String numberSeat) {
+//        return searcherSeatForCancelBookedTicket.findSeatForCancelBookedTicket(numberFlight, numberSeat);
+//    }
 
     @Override
     public Plane findFreePlane(ZonedDateTime dateForFlightDto) {
@@ -61,5 +62,11 @@ public class SearcherServiceImpl implements SearcherService {
     public Set<Flight> findFlightWithPlaneChange() {
 
         return searcherFlightWithPlaneChangeDao.findFlightByChangePlane("BREST", "MOSCOW");
+    }
+
+    @Override
+    public List<Flight> findFlightByCondition(FieldSearcherDto fieldSearcherDto) {
+
+        return null;
     }
 }

@@ -3,10 +3,13 @@ package by.ita.je.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
+
 @Data
 @Entity
 @Table(name = "roles")
@@ -16,4 +19,8 @@ public class Role {
     private Long id;
     @Column(name = "role_name")
     private String roleName;
+
+    public Role(String roleName){
+        this.roleName=roleName;
+    }
 }

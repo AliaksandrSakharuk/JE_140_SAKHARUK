@@ -9,11 +9,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClinetDto {
+public class ClientDto {
     private Long id;
     private String email;
     private String firstName;
     private String secondName;
     private long phoneNumber;
     private List<PassengerDto> passengers;
+    private List<TicketDto> tickets;
 }

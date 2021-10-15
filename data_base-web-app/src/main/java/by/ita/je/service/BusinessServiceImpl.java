@@ -21,7 +21,8 @@ public class BusinessServiceImpl implements BusinessService {
     private final AirCompanyService companyService;
     private final SeatSericve seatSericve;
     private final TicketService ticketService;
-
+    private final UserService userService;
+    private final ClientService clientService;
 
     @Override
     public Flight createNewFlight(Flight flight) {
@@ -43,7 +44,6 @@ public class BusinessServiceImpl implements BusinessService {
         return flightService.readAll();
     }
 
-
     @Override
     public AirCompany createNewAirCompany(AirCompany company){
         createIfNotRelationshipAirCompanyToPlanes(company);
@@ -51,35 +51,35 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public Ticket bookTicket(long idSeat) throws NotCorrectData {
-        Seat seat=seatSericve.readById(idSeat);
-        if(seat.isBooked()){
-            throw new NotCorrectData("This seat is BOOKED!!!!!!");
-        }
-        seat.setBooked(true);
-        seatSericve.save(seat);
-        Ticket ticket=getTicket();
-        ticket.setNumberSeat(seat.getNumberSeat());
-        ticket.setBookedDateTime(ZonedDateTime.now());
-        Flight flight=searcherService.findFlightBySeat(idSeat);
-        ticket.setFlight(flight);
+    public Ticket bookTicket(Ticket ticket) throws NotCorrectData {
+        Client client=userService.getCurrentUser().getClient();
+        ticket.getSeat().setBooked(true);
+        ticket.setClient(client);
+        seatSericve.update(ticket.getSeat().getId(),ticket.getSeat());
         return ticketService.save(ticket);
     }
 
     @Override
     public void cancelBookedTicket(Long idTicket) throws NotFoundData{
         Ticket ticket= ticketService.readById(idTicket);
-        final String numberFlight=ticket.getFlight().getNumberFlight();
-        final String numberSeat= ticket.getNumberSeat();
-        Seat seat=searcherService.findSeatForCancelBookedTicket(numberFlight, numberSeat);
+        Seat seat=ticket.getSeat();
         seat.setBooked(false);
         seatSericve.update(seat.getId(),seat);
         ticketService.deleteById(idTicket);
     }
 
-    private Ticket getTicket(){
-        return new Ticket();
+    @Override
+    public List<Ticket> getAllTicketClient() {
+        Client client=userService.getCurrentUser().getClient();
+        return client.getTickets();
     }
+
+    @Override
+    public List<Passenger> getPassengersOfClient() {
+        Client client=userService.getCurrentUser().getClient();
+        return client.getPassengers();
+    }
+
 
     private void createSeat(Flight flight){
         List<Seat> list=new ArrayList<Seat>();

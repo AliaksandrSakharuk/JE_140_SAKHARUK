@@ -35,7 +35,6 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticket = ticketDao.findById(id)
                 .orElseThrow(() -> new NotFoundData( "Ticket"));
         if(ticketNew.getBookedDateTime()!=null) ticket.setBookedDateTime(ticket.getBookedDateTime());
-        if(ticketNew.getNumberSeat()!="") ticket.setNumberSeat(ticket.getNumberSeat());
         return ticketDao.save(ticket);
     }
 

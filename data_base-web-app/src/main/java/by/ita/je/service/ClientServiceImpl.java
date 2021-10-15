@@ -37,7 +37,6 @@ public class ClientServiceImpl implements ClientService {
         if(clientNew.getSecondName()=="") client.setSecondName(clientNew.getSecondName());
         if(clientNew.getPhoneNumber()==0) client.setPhoneNumber(clientNew.getPhoneNumber());
         return clientDao.save(client);
-
     }
 
     @Override

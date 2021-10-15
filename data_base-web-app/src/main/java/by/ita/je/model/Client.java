@@ -25,4 +25,8 @@ public class Client {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private List<Passenger> passengers;
+
+    @OneToMany
+    @JoinColumn(name = "client_id")
+    List<Ticket> tickets;
 }

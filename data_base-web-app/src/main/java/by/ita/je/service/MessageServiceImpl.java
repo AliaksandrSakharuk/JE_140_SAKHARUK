@@ -19,12 +19,11 @@ public class MessageServiceImpl implements MessageService {
     private final Properties prop;
 
     @Override
-    public void sendMessage() {
+    public void sendMessage(String password, String mail) {
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("airsales777@gmail.com",
-                        "77sales77");
+                return new PasswordAuthentication("airsales777@gmail.com","77sales77");
             }
         });
         try {
@@ -32,7 +31,7 @@ public class MessageServiceImpl implements MessageService {
             message.setFrom(new InternetAddress("airsales777@gmail.com"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("sakharukaliaksandr@gmail.com"));
             message.setSubject("Reconstruction Password");
-            message.setText("This is my first email using JavaMailer");
+            message.setText("Your new password: " + password + " Please login and change it!");
             Transport.send(message);
         } catch (Exception e) {
             e.printStackTrace();

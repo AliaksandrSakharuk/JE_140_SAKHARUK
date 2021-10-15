@@ -1,7 +1,7 @@
 package by.ita.je.restController;
 
 
-import by.ita.je.dto.FieldAirCompanyDto;
+import by.ita.je.dto.FieldSearcherDto;
 import by.ita.je.dto.FlightDto;
 import by.ita.je.model.Flight;
 import by.ita.je.service.api.FlightService;
@@ -35,7 +35,7 @@ public class FlightController {
     }
 
     @GetMapping("/flight/searcher/by_company")
-    public List<FlightDto> findByNameAirCompany(@RequestBody FieldAirCompanyDto fieldDto){
+    public List<FlightDto> findByNameAirCompany(@RequestBody FieldSearcherDto fieldDto){
         final List<Flight> listFlight=searcherService.findFlightByAirCompany(fieldDto.getNameCompany());
         List<FlightDto> listFlightDto=listFlight.stream()
                 .map(flight -> objectMapper.convertValue(flight, FlightDto.class))

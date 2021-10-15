@@ -1,5 +1,6 @@
 package by.ita.je.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,9 +16,4 @@ public class Seat {
     private Long id;
     private String numberSeat;
     private boolean booked;
-
-
-//    @ManyToOne
-//    @JoinColumn(name = "flight_id")
-//    private Flight flight;
 }

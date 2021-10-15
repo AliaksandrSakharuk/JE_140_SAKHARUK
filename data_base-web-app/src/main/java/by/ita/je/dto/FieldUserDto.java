@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FieldAirCompanyDto {
-    private String nameCompany;
+public class FieldUserDto {
+    private String login;
+    private String email;
 }

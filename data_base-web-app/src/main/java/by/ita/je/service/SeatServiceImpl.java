@@ -18,7 +18,7 @@ public class SeatServiceImpl implements SeatSericve {
 
     @Override
     public Seat save(Seat seat) throws NotCorrectData {
-        if(seat.getNumberSeat()=="") throw new NotCorrectData("Plane");
+        if(seat.getNumberSeat()=="") throw new NotCorrectData("Seat");
         return seatDao.save(seat);
     }
 
@@ -27,7 +27,7 @@ public class SeatServiceImpl implements SeatSericve {
         Seat seat = seatDao.findById(id)
                 .orElseThrow(() -> new NotFoundData( "Seat"));
         if(seatNew.getNumberSeat()!="") seat.setNumberSeat(seatNew.getNumberSeat());
-        seat.setBooked(seatNew.isBooked());
+        if(seat.isBooked()!=seatNew.isBooked()) seat.setBooked(seatNew.isBooked());
         return seatDao.save(seat);
     }
 

@@ -14,5 +14,9 @@ public class TicketDto {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime bookedDateTime;
-    private String numberSeat;
+    private String firstNamePassenger;
+    private String secondNamePassenger;
+    private long phoneNumberPassenger;
+    private String passportNumberPassenger;
+    private SeatDto seat;
 }

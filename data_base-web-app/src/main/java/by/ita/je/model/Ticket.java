@@ -1,6 +1,7 @@
 package by.ita.je.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,14 +18,17 @@ public class Ticket {
     private Long id;
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private ZonedDateTime bookedDateTime;
-    private String numberSeat;
+    private String firstNamePassenger;
+    private String secondNamePassenger;
+    private long phoneNumberPassenger;
+    private String passportNumberPassenger;
 
-//    @ManyToOne
-//    @JoinColumn(name = "passenger_id")
-//    @JsonIgnore
-//    private Passenger passenger;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    @JsonIgnore
+    private Client client;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "flight_id")
-    private Flight flight;
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private Seat seat;
 }

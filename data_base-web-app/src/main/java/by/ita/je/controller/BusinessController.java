@@ -1,16 +1,20 @@
 package by.ita.je.controller;
 
-import by.ita.je.dto.AirCompanyDto;
-import by.ita.je.dto.FlightDto;
-import by.ita.je.dto.TicketDto;
+import by.ita.je.dto.*;
 import by.ita.je.model.AirCompany;
 import by.ita.je.model.Flight;
+import by.ita.je.model.Seat;
 import by.ita.je.model.Ticket;
-import by.ita.je.service.api.BusinessService;
-import by.ita.je.service.api.MessageService;
+//import by.ita.je.service.UserDetailsServiceImpl;
+import by.ita.je.service.UserDetailsServiceImpl;
+import by.ita.je.service.api.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +23,10 @@ import java.util.stream.Collectors;
 public class BusinessController {
     private final ObjectMapper objectMapper;
     private final BusinessService businessService;
-    private final MessageService messageService;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final TicketService ticketService;
+    private final UserService userService;
+    SeatSericve seatSericve;
 
     @PostMapping("/sales/flight")
     public FlightDto createNewFlight(@RequestBody FlightDto flightDto){
@@ -40,7 +47,6 @@ public class BusinessController {
         List<FlightDto> flights=list.stream()
                 .map(flight -> objectMapper.convertValue(flight, FlightDto.class))
                 .collect(Collectors.toList());
-        messageService.sendMessage();
         return flights;
     }
 
@@ -51,15 +57,39 @@ public class BusinessController {
         return objectMapper.convertValue(company, AirCompanyDto.class);
     }
 
-    @GetMapping("/sales/ticket/book/{id}")
-    public TicketDto bookTicket(@PathVariable("id") String id){
-        final Ticket ticket=businessService.bookTicket(Long.valueOf(id));
+    @GetMapping("/sales/ticket/book")
+    public TicketDto bookTicket(@RequestBody TicketDto ticketDto){
+        final Ticket ticketNew= objectMapper.convertValue(ticketDto, Ticket.class);
+        final Ticket ticket=businessService.bookTicket(ticketNew);
         return objectMapper.convertValue(ticket, TicketDto.class);
     }
 
     @DeleteMapping("/sales/ticket/book/{id}")
     public void cancelTicket(@PathVariable("id") String id){
         businessService.cancelBookedTicket(Long.valueOf(id));
+    }
 
+    @PostMapping("/password/renewal")
+    public boolean renewalPassword(@RequestBody FieldUserDto fieldUserDto){
+        return userDetailsServiceImpl.renewalPassword(fieldUserDto);
+    }
+
+    @GetMapping("/sales/ticket/{id}")
+    public TicketDto findTicket(@PathVariable("id") String id){
+        final Ticket ticket=ticketService.readById(Long.valueOf(id));
+        return objectMapper.convertValue(ticket, TicketDto.class);
+    }
+    @GetMapping("/sales/seat/new")
+    public Seat createSeat(){
+       Seat seat=new Seat();
+       seat.setBooked(true);
+       seat.setNumberSeat("12W");
+
+        return seatSericve.save(seat);
+    }
+
+    @GetMapping("/client/ticket/all")
+    public List<Ticket> getTicketClint(){
+        return businessService.getAllTicketClient();
     }
 }
